@@ -1,0 +1,172 @@
+@import "@fontsource/newsreader/latin-500.css";
+@import "@fontsource/newsreader/latin-600.css";
+@import "@fontsource/newsreader/latin-500-italic.css";
+@import "@fontsource/outfit/latin-400.css";
+@import "@fontsource/outfit/latin-500.css";
+@import "@fontsource/outfit/latin-600.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+
+  --color-paper: #f3f0ea;
+  --color-paper-deep: #e6e1d6;
+  --color-card: #faf8f4;
+  --color-ink: #1c1b19;
+  --color-muted: #5e5952;
+  --color-faint: #8a847b;
+  --color-line: #e0d9cc;
+  --color-danger: #7d3544;
+
+  --color-habit-pine: #2f6a4a;
+  --color-habit-sea: #2c5f78;
+  --color-habit-clay: #7a4032;
+  --color-habit-slate: #3d5270;
+  --color-habit-stone: #5a534a;
+  --color-habit-rose: #7d3e4c;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+:root {
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-scale-modal: 0.96;
+  --shadow-panel: 0 16px 40px color-mix(in oklab, var(--color-ink) 14%, transparent);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled),
+  [role="menuitem"]:not([data-disabled]),
+  [role="radio"]:not(:disabled),
+  [role="tab"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+.pressable {
+  transition:
+    transform var(--motion-quick) var(--ease-smooth-out),
+    background-color var(--motion-quick) var(--ease-smooth-out),
+    color var(--motion-quick) var(--ease-smooth-out),
+    opacity var(--motion-quick) var(--ease-smooth-out);
+}
+
+.pressable:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+
+.week-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: minmax(7.25rem, 1.15fr) repeat(7, minmax(2.75rem, 1fr));
+  min-width: 28rem;
+  align-items: stretch;
+}
+
+@media (min-width: 1024px) {
+  .week-grid {
+    min-width: 0;
+    grid-template-columns: minmax(8rem, 1.15fr) repeat(7, minmax(2.75rem, 1fr));
+  }
+}
+
+.week-sticky {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--color-card);
+}
+
+.rite-overlay {
+  background: color-mix(in oklab, var(--color-ink) 40%, transparent);
+}
+
+.rite-dialog {
+  box-shadow: var(--shadow-panel);
+  animation: rite-dialog-in var(--motion-fast) var(--ease-smooth-out);
+}
+
+.menu-panel {
+  box-shadow: var(--shadow-panel);
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+  animation: rite-menu-in var(--motion-fast) var(--ease-smooth-out);
+}
+
+@keyframes rite-dialog-in {
+  from {
+    opacity: 0;
+    scale: var(--motion-scale-modal);
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes rite-menu-in {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
